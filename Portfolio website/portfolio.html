@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Damilola Abraham — UI/UX Designer & Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2ec;
+    --accent: #c8472b;
+    --accent2: #2b6cb0;
+    --muted: #7a7570;
+    --border: #d9d4cb;
+    --card: #fff;
+    --shadow: 0 2px 32px 0 rgba(14,14,14,0.08);
+    --radius: 2px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --nav-h: 68px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: .5;
+  }
+
+  /* ─── SCROLL PROGRESS ─── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; z-index: 1000;
+    height: 2px; width: 0%;
+    background: var(--accent);
+    transition: width .1s linear;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    background: rgba(245,242,236,.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+    font-size: .82rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    transition: color .2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+  .nav-cta {
+    font-size: .8rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    text-decoration: none; color: var(--paper);
+    background: var(--ink); padding: .55rem 1.4rem;
+    border-radius: var(--radius);
+    transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--ink); transition: transform .3s, opacity .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-menu {
+    display: none;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 800;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 5vw;
+    flex-direction: column; gap: 1.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 1rem; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+  }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; z-index: 1; }
+  .page-section {
+    min-height: 100vh;
+    padding: calc(var(--nav-h) + 6rem) 5vw 6rem;
+    display: none;
+  }
+  .page-section.active { display: block; }
+
+  /* home is always shown first */
+  #home { display: block; }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: .82rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.08; letter-spacing: -.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem; color: var(--muted); max-width: 52ch; margin-bottom: 3rem;
+  }
+
+  /* ─── HOME HERO ─── */
+  #home {
+    padding-top: 0; min-height: 100vh;
+    display: grid; place-items: center;
+  }
+
+  .hero-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    max-width: 1200px; width: 100%;
+    padding: calc(var(--nav-h) + 4rem) 5vw 6rem;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: .75rem;
+    font-family: var(--font-mono); font-size: .72rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+  }
+
+  .hero-name {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900; line-height: 1.0; letter-spacing: -.04em;
+    color: var(--ink); margin-bottom: .4rem;
+  }
+  .hero-name em { color: var(--accent); font-style: italic; }
+
+  .hero-role {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 400; font-style: italic;
+    color: var(--muted); margin-bottom: 2rem;
+  }
+
+  .hero-summary {
+    font-size: 1rem; color: var(--muted);
+    max-width: 46ch; line-height: 1.8; margin-bottom: 2.5rem;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--ink); color: var(--paper);
+    font-size: .82rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: .85rem 2rem; border-radius: var(--radius); text-decoration: none;
+    transition: background .2s, transform .2s, box-shadow .2s;
+    border: 1.5px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,71,43,.2); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: transparent; color: var(--ink);
+    font-size: .82rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: .85rem 2rem; border-radius: var(--radius); text-decoration: none;
+    border: 1.5px solid var(--border);
+    transition: border-color .2s, color .2s, transform .2s;
+  }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative; display: flex; justify-content: center; align-items: center;
+  }
+
+  .hero-avatar-frame {
+    position: relative; width: 340px; height: 420px;
+  }
+
+  .hero-avatar-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #e8e2d8 0%, #eadbc4 100%);
+    border-radius: 200px 200px 20px 20px;
+    border: 1px solid var(--border);
+  }
+
+  .hero-avatar-initials {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 7rem; font-weight: 900; color: transparent; /* hide the "AO" text */
+  letter-spacing: -.05em;
+
+  background-image: url('4Z8A9971_copy.jpg-removebg-preview.png');
+  background-size: cover;
+  background-position: center top; /* 'top' works better for portraits */
+  border-radius: 0; /* remove if you want the rounded-top shape from the frame */
+}
+
+  .hero-badge {
+    position: absolute; bottom: 32px; right: -28px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem 1.2rem;
+    box-shadow: var(--shadow);
+    font-size: .78rem;
+  }
+  .hero-badge strong {
+    display: block; font-weight: 700; font-size: .95rem; margin-bottom: .1rem;
+  }
+  .hero-badge span { color: var(--muted); font-size: .72rem; }
+
+  .hero-badge2 {
+    position: absolute; top: 32px; left: -28px;
+    background: var(--accent); color: var(--paper);
+    border-radius: 8px; padding: .85rem 1.1rem;
+    box-shadow: 0 4px 20px rgba(200,71,43,.3);
+    font-size: .78rem;
+  }
+  .hero-badge2 strong {
+    display: block; font-weight: 700; font-size: .95rem;
+  }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .stat-item { }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2rem; font-weight: 900; line-height: 1;
+    letter-spacing: -.04em; color: var(--ink);
+  }
+  .stat-label {
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); margin-top: .25rem;
+  }
+
+  /* ─── FEATURED PROJECTS (Home) ─── */
+  .featured-section {
+    padding: 6rem 5vw;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .featured-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem;
+  }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .featured-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .3s, box-shadow .3s;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+  .featured-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(14,14,14,.12); }
+
+  .fc-thumb {
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 4rem; font-weight: 900;
+    letter-spacing: -.05em;
+    position: relative; overflow: hidden;
+  }
+  .fc-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(14,14,14,.06);
+    opacity: 0; transition: opacity .3s;
+  }
+  .featured-card:hover .fc-thumb::after { opacity: 1; }
+
+  .fc-body { padding: 1.5rem; }
+  .fc-tag {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  .fc-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem; font-weight: 700; line-height: 1.25;
+    letter-spacing: -.02em; margin-bottom: .5rem;
+  }
+  .fc-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+  /* ─── PORTFOLIO ─── */
+  #portfolio { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; }
+
+  .filter-bar {
+    display: flex; gap: .75rem; flex-wrap: wrap; margin-bottom: 3rem;
+  }
+  .filter-btn {
+    font-family: var(--font-mono); font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); padding: .45rem 1rem; border-radius: 2px;
+    cursor: pointer; transition: all .2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--ink); color: var(--paper); border-color: var(--ink);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .port-card {
+    border: 1px solid var(--border); border-radius: 4px;
+    overflow: hidden; background: var(--card);
+    transition: transform .3s, box-shadow .3s;
+    cursor: pointer;
+  }
+  .port-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(14,14,14,.1); }
+
+  .port-thumb {
+    aspect-ratio: 16/10;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative; overflow: hidden;
+  }
+
+  .port-overlay {
+    position: absolute; inset: 0;
+    background: rgba(14,14,14,.8);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity .3s;
+  }
+  .port-card:hover .port-overlay { opacity: 1; }
+  .port-overlay-text {
+    color: var(--paper); font-size: .8rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    font-family: var(--font-mono);
+  }
+
+  .port-body { padding: 1.25rem; }
+  .port-tag {
+    font-family: var(--font-mono); font-size: .65rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .4rem;
+  }
+  .port-title {
+    font-weight: 700; font-size: 1rem; margin-bottom: .4rem;
+  }
+  .port-desc { font-size: .82rem; color: var(--muted); }
+
+  /* ─── PROJECTS (case studies) ─── */
+  #projects { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; max-width: 1000px; }
+
+  .case-study {
+    border: 1px solid var(--border); border-radius: 4px;
+    background: var(--card); overflow: hidden; margin-bottom: 3rem;
+  }
+
+  .cs-header {
+    padding: 2.5rem;
+    border-bottom: 1px solid var(--border);
+    display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: start;
+  }
+
+  .cs-num {
+    font-family: var(--font-mono); font-size: .7rem;
+    letter-spacing: .15em; color: var(--muted); margin-bottom: .5rem;
+  }
+
+  .cs-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 900; letter-spacing: -.03em;
+    margin-bottom: .5rem;
+  }
+
+  .cs-tags { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .75rem; }
+  .cs-tag {
+    font-family: var(--font-mono); font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    border: 1px solid var(--border); color: var(--muted);
+    padding: .25rem .65rem; border-radius: 2px;
+  }
+
+  .cs-body { padding: 2.5rem; }
+
+  .cs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem;
+  }
+
+  .cs-block h4 {
+    font-family: var(--font-mono); font-size: .7rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .75rem;
+  }
+  .cs-block p { font-size: .88rem; color: var(--muted); line-height: 1.75; }
+
+  .cs-process {
+    display: flex; gap: 0; margin: 2rem 0;
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .cs-step {
+    flex: 1; padding: 1rem .75rem; text-align: center;
+    border-right: 1px solid var(--border);
+    background: var(--paper);
+  }
+  .cs-step:last-child { border-right: none; }
+  .cs-step-num {
+    font-family: var(--font-mono); font-size: .65rem;
+    letter-spacing: .1em; color: var(--muted); margin-bottom: .3rem;
+  }
+  .cs-step-label {
+    font-size: .78rem; font-weight: 500;
+  }
+
+  .cs-outcome {
+    background: var(--ink); color: var(--paper);
+    border-radius: 3px; padding: 1.5rem 2rem; margin-top: 2rem;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;
+  }
+  .cs-metric strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem; font-weight: 900; letter-spacing: -.04em;
+    color: var(--paper);
+  }
+  .cs-metric span { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(245,242,236,.5); }
+
+  /* ─── RESUME ─── */
+  #resume { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; max-width: 900px; }
+
+  .resume-download {
+    display: inline-flex; align-items: center; gap: .6rem;
+    border: 1.5px solid var(--ink); color: var(--ink);
+    font-size: .8rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: .75rem 1.75rem; border-radius: var(--radius); text-decoration: none;
+    margin-bottom: 3rem; transition: all .2s;
+  }
+  .resume-download:hover { background: var(--ink); color: var(--paper); }
+  .resume-download svg { width: 16px; height: 16px; }
+
+  .resume-section { margin-bottom: 3rem; }
+  .resume-section-title {
+    font-family: var(--font-mono); font-size: .72rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.25rem; padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: .5rem; margin-bottom: 2rem;
+    padding-bottom: 2rem; border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .exp-role {
+    font-weight: 700; font-size: 1rem; margin-bottom: .15rem;
+  }
+  .exp-company { color: var(--accent); font-size: .88rem; margin-bottom: .5rem; }
+  .exp-desc { font-size: .85rem; color: var(--muted); line-height: 1.7; }
+  .exp-date {
+    font-family: var(--font-mono); font-size: .7rem;
+    letter-spacing: .08em; color: var(--muted); white-space: nowrap;
+  }
+
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem;
+  }
+  .skill-category h4 {
+    font-size: .78rem; font-weight: 700; margin-bottom: .75rem;
+    letter-spacing: .04em;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .skill-tag {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .08em; background: var(--paper);
+    border: 1px solid var(--border); padding: .3rem .7rem; border-radius: 2px;
+    color: var(--muted);
+  }
+
+  .cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .cert-item {
+    border: 1px solid var(--border); border-radius: 4px; padding: 1.25rem;
+    background: var(--card);
+  }
+  .cert-title { font-weight: 700; font-size: .9rem; margin-bottom: .25rem; }
+  .cert-issuer { font-size: .78rem; color: var(--accent); margin-bottom: .2rem; }
+  .cert-date { font-family: var(--font-mono); font-size: .68rem; color: var(--muted); }
+
+  /* ─── EVENTS ─── */
+  #events { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; }
+
+  .events-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem; max-width: 1200px;
+  }
+
+  .event-card {
+    border: 1px solid var(--border); border-radius: 4px;
+    background: var(--card); padding: 1.75rem; position: relative;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .event-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+  .event-badge {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .3rem .75rem; border-radius: 2px; margin-bottom: 1rem;
+  }
+  .badge-speaker { background: rgba(200,71,43,.1); color: var(--accent); }
+  .badge-organizer { background: rgba(43,108,176,.1); color: var(--accent2); }
+  .badge-attendee { background: rgba(14,14,14,.06); color: var(--ink); }
+  .badge-workshop { background: rgba(200,71,43,.15); color: var(--accent); }
+
+  .event-title { font-weight: 700; font-size: 1.05rem; margin-bottom: .4rem; }
+  .event-meta {
+    font-family: var(--font-mono); font-size: .7rem;
+    letter-spacing: .08em; color: var(--muted); margin-bottom: .75rem;
+  }
+  .event-desc { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+  /* ─── CONTACT ─── */
+  #contact { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; }
+
+  .contact-wrap {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    max-width: 1000px;
+  }
+
+  .contact-left h2 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900; letter-spacing: -.04em;
+    line-height: 1.1; margin-bottom: 1.25rem;
+  }
+  .contact-left p { font-size: .95rem; color: var(--muted); margin-bottom: 2.5rem; line-height: 1.8; }
+
+  .social-links { display: flex; flex-direction: column; gap: .85rem; }
+  .social-link {
+    display: flex; align-items: center; gap: .85rem;
+    text-decoration: none; color: var(--ink);
+    font-size: .88rem; font-weight: 500;
+    padding: .75rem 1rem; border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color .2s, background .2s, transform .2s;
+  }
+  .social-link:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); transform: translateX(4px); }
+  .social-link svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    background: var(--card); border: 1px solid var(--border);
+    color: var(--ink); font-family: var(--font-body);
+    font-size: .9rem; padding: .8rem 1rem; border-radius: var(--radius);
+    outline: none; transition: border-color .2s;
+    resize: none;
+  }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--ink); }
+  .form-group textarea { min-height: 130px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-submit {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    background: var(--ink); color: var(--paper);
+    font-family: var(--font-body); font-size: .82rem;
+    font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: 1rem 2.5rem; border: 1.5px solid var(--ink); border-radius: var(--radius);
+    cursor: pointer; transition: all .2s; width: 100%;
+  }
+  .form-submit:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+  .form-success {
+    display: none; padding: 1.5rem; background: rgba(43,108,176,.08);
+    border: 1px solid rgba(43,108,176,.25); border-radius: var(--radius);
+    text-align: center; font-size: .9rem; color: var(--accent2);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 5vw;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    font-size: .78rem; color: var(--muted);
+    font-family: var(--font-mono); letter-spacing: .06em;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .animate-up {
+    opacity: 0;
+    animation: fadeUp .7s ease forwards;
+  }
+  .delay-1 { animation-delay: .1s; }
+  .delay-2 { animation-delay: .2s; }
+  .delay-3 { animation-delay: .3s; }
+  .delay-4 { animation-delay: .4s; }
+  .delay-5 { animation-delay: .55s; }
+  .delay-6 { animation-delay: .7s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-wrap { grid-template-columns: 1fr; text-align: center; }
+    .hero-eyebrow { justify-content: center; }
+    .hero-summary { margin: 0 auto 2.5rem; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .hero-visual { display: none; }
+    .featured-grid { grid-template-columns: 1fr 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+    .cs-outcome { grid-template-columns: 1fr 1fr 1fr; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  @media (max-width: 600px) {
+    .featured-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .cs-process { flex-direction: column; }
+    .cs-step { border-right: none; border-bottom: 1px solid var(--border); }
+    .cs-step:last-child { border-bottom: none; }
+    .cs-outcome { grid-template-columns: 1fr; }
+    .cs-header { grid-template-columns: 1fr; }
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  @media (pointer: cursor) {
+    * { cursor: pointer !important; }
+    #cursor {
+      position: fixed; pointer-events: none; z-index: 9999;
+      width: 10px; height: 10px;
+      background: var(--ink); border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform .1s, width .2s, height .2s, background .2s;
+      mix-blend-mode: multiply;
+    }
+    #cursor-ring {
+      position: fixed; pointer-events: none; z-index: 9998;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--ink); border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: left .12s ease-out, top .12s ease-out, width .3s, height .3s, opacity .3s;
+      opacity: 0.4;
+    }
+    body:hover #cursor, body:hover #cursor-ring { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" onclick="showSection('home')">Ydams<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('home')" class="active" id="nav-home">Home</a></li>
+    <li><a href="#" onclick="showSection('portfolio')" id="nav-portfolio">Portfolio</a></li>
+    <li><a href="#" onclick="showSection('projects')" id="nav-projects">Projects</a></li>
+    <li><a href="#" onclick="showSection('resume')" id="nav-resume">Resume</a></li>
+    <li><a href="#" onclick="showSection('events')" id="nav-events">Events</a></li>
+    <li><a href="#" onclick="showSection('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-cta" onclick="showSection('contact')">Hire Me</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="showSection('home');toggleMenu()">Home</a>
+  <a href="#" onclick="showSection('portfolio');toggleMenu()">Portfolio</a>
+  <a href="#" onclick="showSection('projects');toggleMenu()">Projects</a>
+  <a href="#" onclick="showSection('resume');toggleMenu()">Resume</a>
+  <a href="#" onclick="showSection('events');toggleMenu()">Events</a>
+  <a href="#" onclick="showSection('contact');toggleMenu()">Contact</a>
+</div>
+
+<!-- ───────────── HOME ───────────── -->
+<section id="home" class="page-section active">
+  <div class="hero-wrap">
+    <div class="hero-content">
+      <div class="hero-eyebrow animate-up">Available for Work</div>
+      <h1 class="hero-name animate-up delay-1">Damilola <em>Abraham</em></h1>
+      <p class="hero-role animate-up delay-2">Product Designer & Digital Transformation Specialist</p>
+      <p class="hero-summary animate-up delay-3">Hi, I'm Damilola Abraham a seasoned IT Professional, a Product Designer, Growth Coach, Digital Operations and Strategy Professional expertise, Helps organizations achieve tangible results and growth, Experienced in business operations, planning, and execution. Passionate about moving individuals from clarity to action. I am currently the Founder of Ridgeview innovations Hub Ltd and B2bab Foundation
+
+.</p>
+      <div class="hero-actions animate-up delay-4">
+        <a href="#" class="btn-primary" onclick="showSection('portfolio')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          View My Work
+        </a>
+        <a href="#" class="btn-outline" onclick="showSection('contact')">Let's Talk</a>
+      </div>
+      <div class="hero-stats animate-up delay-5">
+        <div class="stat-item">
+          <div class="stat-number">5+</div>
+          <div class="stat-label">Years Exp.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">40+</div>
+          <div class="stat-label">Projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">18</div>
+          <div class="stat-label">Clients</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual animate-up delay-3">
+      <div class="hero-avatar-frame">
+        <div class="hero-avatar-bg"></div>
+        <div class="hero-avatar-initials">DAY</div>
+        <div class="hero-badge">
+          <strong>🏆 Google UX</strong>
+          <span>Certified Designer</span>
+        </div>
+        <div class="hero-badge2">
+          <strong> Open to</strong>
+          <span style="font-size:.7rem;opacity:.85">Opportunities</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Projects -->
+  <div class="featured-section">
+    <div class="featured-header">
+      <div>
+        <div class="section-label">Selected Work</div>
+        <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:1200;letter-spacing:-.03em;">Featured Projects</h2>
+      </div>
+      <a href="#" class="btn-outline" onclick="showSection('portfolio')" style="white-space:nowrap">View All</a>
+    </div>
+    <div class="featured-grid">
+      <a href="#" class="featured-card" onclick="showSection('projects')">
+        <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ebe1,#e0d5c8);">🏥</div>
+        <div class="fc-body">
+          <div class="fc-tag">Mobile App · Healthcare</div>
+          <div class="fc-title">MediFlow Patient Portal</div>
+          <div class="fc-desc">Redesigned the appointment & health records experience for a 200k-user hospital app — reducing drop-off by 62%.</div>
+        </div>
+      </a>
+      <a href="#" class="featured-card" onclick="showSection('projects')">
+        <div class="fc-thumb" style="background:linear-gradient(135deg,#e8e8f0,#d8d8e8);">💳</div>
+        <div class="fc-body">
+          <div class="fc-tag">Web App · FinTech</div>
+          <div class="fc-title">Navi Finance Dashboard</div>
+          <div class="fc-desc">End-to-end design of a personal finance dashboard — from 0 to 10k users in 3 months post-launch.</div>
+        </div>
+      </a>
+      <a href="#" class="featured-card" onclick="showSection('projects')">
+        <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ece8,#e8e0d8);">🛒</div>
+        <div class="fc-body">
+          <div class="fc-tag">E-commerce · Product Design</div>
+          <div class="fc-title">Artisan Marketplace</div>
+          <div class="fc-desc">Full UX overhaul of an African artisan e-commerce platform — increased conversion rate by 44%.</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── PORTFOLIO ───────────── -->
+<section id="portfolio" class="page-section">
+  <div class="section-label">All Work</div>
+  <h1 class="section-title">Portfolio</h1>
+  <p class="section-subtitle">A curated collection of design work spanning mobile, web, and product — each rooted in research and built for real users.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterPortfolio('all', this)">All</button>
+    <button class="filter-btn" onclick="filterPortfolio('mobile', this)">Mobile Apps</button>
+    <button class="filter-btn" onclick="filterPortfolio('web', this)">Websites</button>
+    <button class="filter-btn" onclick="filterPortfolio('product', this)">Product Design</button>
+    <button class="filter-btn" onclick="filterPortfolio('branding', this)">Branding</button>
+  </div>
+
+  <div class="portfolio-grid" id="portfolio-grid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- ───────────── PROJECTS ───────────── -->
+<section id="projects" class="page-section">
+  <div class="section-label">Deep Dives</div>
+  <h1 class="section-title">Case Studies</h1>
+  <p class="section-subtitle">Detailed explorations of how I approach complex design problems — from discovery to delivery.</p>
+
+  <!-- Case Study 1 -->
+  <div class="case-study">
+    <div class="cs-header">
+      <div>
+        <div class="cs-num">01 — Healthcare</div>
+        <div class="cs-title">MediFlow Patient Portal</div>
+        <div class="cs-tags">
+          <span class="cs-tag">UX Research</span>
+          <span class="cs-tag">Figma</span>
+          <span class="cs-tag">Prototyping</span>
+          <span class="cs-tag">React Native</span>
+          <span class="cs-tag">Usability Testing</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;color:var(--muted);">Duration</div>
+        <div style="font-weight:700;font-size:.95rem;">4 months</div>
+      </div>
+    </div>
+    <div class="cs-body">
+      <div class="cs-grid">
+        <div class="cs-block">
+          <h4>Problem Statement</h4>
+          <p>Patients at a major hospital network struggled with a fragmented digital experience. The existing app had a 71% abandonment rate on the appointment booking flow, with users citing confusion, excessive steps, and trust issues around medical data.</p>
+        </div>
+        <div class="cs-block">
+          <h4>My Role</h4>
+          <p>Lead UI/UX Designer working alongside a product manager and a 3-person engineering team. I owned research, information architecture, interaction design, and design system implementation.</p>
+        </div>
+      </div>
+
+      <div class="cs-process">
+        <div class="cs-step"><div class="cs-step-num">01</div><div class="cs-step-label">Discover</div></div>
+        <div class="cs-step"><div class="cs-step-num">02</div><div class="cs-step-label">Define</div></div>
+        <div class="cs-step"><div class="cs-step-num">03</div><div class="cs-step-label">Ideate</div></div>
+        <div class="cs-step"><div class="cs-step-num">04</div><div class="cs-step-label">Prototype</div></div>
+        <div class="cs-step"><div class="cs-step-num">05</div><div class="cs-step-label">Test</div></div>
+        <div class="cs-step"><div class="cs-step-num">06</div><div class="cs-step-label">Deliver</div></div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-block">
+          <h4>Design Process</h4>
+          <p>Conducted 14 user interviews and a competitive audit of 8 healthcare apps. Synthesized findings into 3 user personas and journey maps. Ran 2 rounds of usability testing on lo-fi prototypes before high-fidelity implementation.</p>
+        </div>
+        <div class="cs-block">
+          <h4>Key Decisions</h4>
+          <p>Reduced the booking flow from 11 steps to 4. Introduced a persistent progress indicator, clearer data consent UI, and a "care timeline" view that unified all health records in a single scroll.</p>
+        </div>
+      </div>
+
+      <div class="cs-outcome">
+        <div class="cs-metric"><strong>62%</strong><span>Drop-off Reduction</span></div>
+        <div class="cs-metric"><strong>4.7★</strong><span>App Store Rating</span></div>
+        <div class="cs-metric"><strong>200k</strong><span>Active Users</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case Study 2 -->
+  <div class="case-study">
+    <div class="cs-header">
+      <div>
+        <div class="cs-num">02 — FinTech</div>
+        <div class="cs-title">Navi Finance Dashboard</div>
+        <div class="cs-tags">
+          <span class="cs-tag">Product Design</span>
+          <span class="cs-tag">Data Viz</span>
+          <span class="cs-tag">Design System</span>
+          <span class="cs-tag">Next.js</span>
+          <span class="cs-tag">Tailwind</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;color:var(--muted);">Duration</div>
+        <div style="font-weight:700;font-size:.95rem;">6 months</div>
+      </div>
+    </div>
+    <div class="cs-body">
+      <div class="cs-grid">
+        <div class="cs-block">
+          <h4>Problem Statement</h4>
+          <p>Young professionals in Ghana lacked accessible tools for tracking personal finances. Existing solutions were either too complex, didn't support local currencies, or failed to account for informal income patterns common in the market.</p>
+        </div>
+        <div class="cs-block">
+          <h4>My Role</h4>
+          <p>End-to-end product designer and front-end engineer. Built the full design system in Figma, created interactive prototypes, and implemented the React/Next.js front-end with real-time data visualization components.</p>
+        </div>
+      </div>
+
+      <div class="cs-process">
+        <div class="cs-step"><div class="cs-step-num">01</div><div class="cs-step-label">Research</div></div>
+        <div class="cs-step"><div class="cs-step-num">02</div><div class="cs-step-label">Architecture</div></div>
+        <div class="cs-step"><div class="cs-step-num">03</div><div class="cs-step-label">Design Sys.</div></div>
+        <div class="cs-step"><div class="cs-step-num">04</div><div class="cs-step-label">UI Design</div></div>
+        <div class="cs-step"><div class="cs-step-num">05</div><div class="cs-step-label">Build</div></div>
+        <div class="cs-step"><div class="cs-step-num">06</div><div class="cs-step-label">Launch</div></div>
+      </div>
+
+      <div class="cs-grid">
+        <div class="cs-block">
+          <h4>Design Process</h4>
+          <p>Surveyed 80+ users aged 22-35. Identified key mental models around money management in the Ghanaian context. Designed a contextual onboarding that auto-detects income patterns. Built a 64-component design system for consistency and developer handoff.</p>
+        </div>
+        <div class="cs-block">
+          <h4>Technical Implementation</h4>
+          <p>Built with Next.js 14, Recharts for data visualization, and Zustand for state management. Achieved 97 Lighthouse performance score. Designed accessible colour contrast at WCAG AA across all components.</p>
+        </div>
+      </div>
+
+      <div class="cs-outcome">
+        <div class="cs-metric"><strong>10k</strong><span>Users in 90 Days</span></div>
+        <div class="cs-metric"><strong>44%</strong><span>Conversion Rate</span></div>
+        <div class="cs-metric"><strong>97</strong><span>Lighthouse Score</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── RESUME ───────────── -->
+<section id="resume" class="page-section">
+  <div class="section-label">Credentials</div>
+  <h1 class="section-title">Resume</h1>
+
+  <a href="https://drive.google.com/uc?export=download&id=1g_bBUopQ6qgx2Re3cD_7uop_1Fj2sJ4J" class="resume-download" onclick="alert('In a real deployment, this would download a PDF resume.')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Download Resume PDF
+  </a>
+
+  <!-- Experience -->
+  <div class="resume-section">
+    <div class="resume-section-title">Experience</div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">Senior UI/UX Designer</div>
+        <div class="exp-company">Andela · Lagos, Nigeria</div>
+        <div class="exp-desc">Led design for 3 enterprise SaaS products serving 50k+ users. Built and maintained a cross-product design system. Mentored 2 junior designers. Collaborated daily with distributed engineering teams across 4 time zones.</div>
+      </div>
+      <div class="exp-date">2022 — Present</div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">Product Designer & Front-End Engineer</div>
+        <div class="exp-company">Flutterwave · Remote</div>
+        <div class="exp-desc">Designed and built UI components for the merchant dashboard used by 900k+ businesses. Reduced support tickets related to UI confusion by 38% through targeted UX improvements.</div>
+      </div>
+      <div class="exp-date">2020 — 2022</div>
+    </div>
+
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">Software Engineer (Full-Stack)</div>
+        <div class="exp-company">InterswitchGroup · Lagos</div>
+        <div class="exp-desc">Developed features for the Quickteller payment platform using React, Node.js, and PostgreSQL. Gained deep understanding of fintech infrastructure that informs my product design work today.</div>
+      </div>
+      <div class="exp-date">2018 — 2020</div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="resume-section">
+    <div class="resume-section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h4>Design</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">Adobe XD</span>
+          <span class="skill-tag">Sketch</span>
+          <span class="skill-tag">Prototyping</span>
+          <span class="skill-tag">Design Systems</span>
+          <span class="skill-tag">Motion</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Research</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">User Interviews</span>
+          <span class="skill-tag">Usability Tests</span>
+          <span class="skill-tag">Journey Mapping</span>
+          <span class="skill-tag">A/B Testing</span>
+          <span class="skill-tag">Hotjar</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Engineering</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Tailwind</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4>Methodologies</h4>
+        <div class="skill-tags">
+          <span class="skill-tag">Design Thinking</span>
+          <span class="skill-tag">Agile / Scrum</span>
+          <span class="skill-tag">Jobs-To-Be-Done</span>
+          <span class="skill-tag">Atomic Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="resume-section">
+    <div class="resume-section-title">Education</div>
+    <div class="exp-item">
+      <div>
+        <div class="exp-role">B.Sc. Computer Science</div>
+        <div class="exp-company">University of Ghana · Legon</div>
+        <div class="exp-desc">First Class Honours. Specialisation in Human-Computer Interaction. Final year project: "Designing for Low-Literacy Mobile Users in West Africa" — awarded Best Final Year Project.</div>
+      </div>
+      <div class="exp-date">2014 — 2018</div>
+    </div>
+  </div>
+
+  <!-- Certifications -->
+  <div class="resume-section">
+    <div class="resume-section-title">Certifications</div>
+    <div class="cert-grid">
+      <div class="cert-item">
+        <div class="cert-title">Google UX Design Professional Certificate</div>
+        <div class="cert-issuer">Google / Coursera</div>
+        <div class="cert-date">2023</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-title">AWS Certified Developer — Associate</div>
+        <div class="cert-issuer">Amazon Web Services</div>
+        <div class="cert-date">2022</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-title">Interaction Design Specialisation</div>
+        <div class="cert-issuer">UC San Diego / Coursera</div>
+        <div class="cert-date">2021</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-title">Accessibility in UX — WCAG 2.1</div>
+        <div class="cert-issuer">Deque University</div>
+        <div class="cert-date">2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── EVENTS ───────────── -->
+<section id="events" class="page-section">
+  <div class="section-label">Community</div>
+  <h1 class="section-title">Events</h1>
+  <p class="section-subtitle">Speaking, teaching, and learning — I invest in the design and tech community through active participation and collaboration.</p>
+
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-badge badge-speaker">Volunteer</div>
+      <div class="event-title">
+  Global Entrepreneurship Festival Conference, Ghana 2025
+  <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" style="display:inline-block; vertical-align:middle; margin-left:6px; border-radius:2px;">
+    <!-- Red stripe -->
+    <rect width="20" height="4.67" y="0" fill="#EF3340"/>
+    <!-- Gold stripe -->
+    <rect width="20" height="4.67" y="4.67" fill="#FCD116"/>
+    <!-- Green stripe -->
+    <rect width="20" height="4.67" y="9.33" fill="#006B3F"/>
+    <!-- Black star -->
+    <polygon points="10,5.2 10.7,7.4 13,7.4 11.2,8.7 11.8,11 10,9.7 8.2,11 8.8,8.7 7,7.4 9.3,7.4" fill="#000000"/>
+  </svg>
+</div>
+      <div class="event-meta">Nov 2025 · Accra, Ghana · 10,000+ attendees</div>
+      <div class="event-desc">Volunteering in Accra, Ghana: Assisted local communities in designing and implementing user-friendly digital solutions, focusing on accessibility, usability, and low-bandwidth environments.</div>
+    </div>
+    <div class="event-card">
+      <div class="event-badge badge-workshop">Attendee</div>
+      <div class="event-title">Design Systems Masterclass</div>
+      <div class="event-meta">Sep 2024 · Virtual · 340 participants</div>
+      <div class="event-desc">3-day intensive workshop on building scalable design systems with Figma — from token architecture to developer handoff. Partnered with ADPList to host globally.</div>
+    </div>
+    <div class="event-card">
+      <div class="event-badge badge-organizer">Attendee</div>
+      <div class="event-title">Figma Africa Community Meetup</div>
+      <div class="event-meta">Jul 2024 · Lagos, Nigeria · 200+ designers</div>
+      <div class="event-desc">Co-organized the first Figma community event in West Africa. Brought together designers from 6 countries for workshops, portfolio reviews, and networking.</div>
+    </div>
+    <div class="event-card">
+      <div class="event-badge badge-speaker">Attendee</div>
+      <div class="event-title">Google Developer Summit West Africa</div>
+      <div class="event-meta">Mar 2024 · Accra, Ghana</div>
+      <div class="event-desc">Panel discussion on the intersection of engineering and design — making the case for designer-engineers as a competitive advantage in product teams.</div>
+    </div>
+    <div class="event-card">
+      <div class="event-badge badge-workshop">Attendee</div>
+      <div class="event-title">She Codes Africa Bootcamp</div>
+      <div class="event-meta">Jan 2024 · Virtual · 180 participants</div>
+      <div class="event-desc">Led a 2-day UI/UX fundamentals workshop for women entering the tech industry. Covered Figma basics, design thinking, and building a first portfolio project.</div>
+    </div>
+    <div class="event-card">
+      <div class="event-badge badge-attendee">Attendee</div>
+      <div class="event-title">Config 2024 — Figma's Annual Conference</div>
+      <div class="event-meta">Jun 2024 · San Francisco, CA</div>
+      <div class="event-desc">Attended Figma's flagship design conference. Connected with the global design community and explored new features in the design collaboration ecosystem.</div>
+    </div>
+  </div>
+</section>
+<!-- ───────────── CONTACT ───────────── -->
+<section id="contact" class="page-section">
+  <div class="section-label">Get In Touch</div>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2>Let's build something <em style="font-style:italic;color:var(--accent)">great</em> together</h2>
+      <p>Whether you need a design partner for your product, want to discuss collaboration, or just have a question — my inbox is always open. I typically respond within 24 hours.</p>
+
+      <div class="social-links">
+        <a href="https://linkedin.com/in/damilolayusuf1" target="_blank" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn — /Damilola Abraham-design
+        </a>
+        <a href="https://github.com/Ydams" target="_blank" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          GitHub — /Damilola Abraham-dev
+        </a>
+        <a href="https://behance.net/damilolayusuf1" target="_blank" class="social-link">
+          <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M13.62 12.78c.84-.36 1.48-1.07 1.48-2.14 0-1.34-1.03-2.14-2.73-2.14H8v6.71h4.48c1.64 0 2.76-.73 2.76-2.07 0-1.01-.6-1.7-1.62-2.14zM10.15 8.5h1.9c.73 0 1.25.37 1.25 1.05 0 .66-.52 1.05-1.25 1.05h-1.9V8.5zm2.08 4.79h-2.08v-2.1h2.08c.79 0 1.34.35 1.34 1.05 0 .7-.55 1.05-1.34 1.05zM9.01 4.5H13c2.42 0 3.86 1.15 3.86 2.94 0 1.3-.77 2.22-1.92 2.65v.06c1.3.3 2.22 1.26 2.22 2.7 0 2.05-1.57 3.15-4.17 3.15H8V4.5h1.01z"/>
+        </svg>
+          Behance — /Damilola Studio
+        </a>
+        <a href="mailto:damola4542@gmail.com" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Damilola
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <div class="contact-form" id="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Jane" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="jane@company.com" />
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select>
+            <option>Job Opportunity</option>
+            <option>Project Collaboration</option>
+            <option>Design Consultation</option>
+            <option>Speaking / Workshop</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell me about your project or opportunity..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send Message
+        </button>
+      </div>
+      <div class="form-success" id="form-success">
+         Message sent! I'll get back to you within 24 hours.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <span>© 2026 Damilola Abraham — All rights reserved</span>
+  <span>Product Designer & Digital Operations Specialist · Lagos, Nigeria</span>
+
+  <div style="display:flex; gap:1.25rem; align-items:center; flex-wrap:wrap;">
+    <a href="https://linkedin.com/in/damilolayusuf1" target="_blank" style="color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:.4rem; transition:color .2s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/Ydams" target="_blank" style="color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:.4rem; transition:color .2s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+    <a href="https://behance.net/damilolayusuf1" target="_blank" style="color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:.4rem; transition:color .2s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      Behance
+    </a>
+    <a href="mailto:damola4542@email.com" style="color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:.4rem; transition:color .2s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--muted)'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Email
+    </a>
+  </div>
+
+  <span>Designed by Ydams</span>
+</footer>
+
+<script>
+// ─── PORTFOLIO DATA ───
+const portfolioItems = [
+  { id:1, title:'MediFlow Patient Portal', tag:'Mobile App', category:'mobile', desc:'Healthcare UX redesign — 62% drop-off reduction', emoji:'🏥', bg:'linear-gradient(135deg,#f0ebe1,#e0d5c8)' },
+  { id:2, title:'Navi Finance Dashboard', tag:'Web App', category:'web', desc:'Personal finance tool — 10k users in 90 days', emoji:'💳', bg:'linear-gradient(135deg,#e8e8f0,#d8d8e8)' },
+  { id:3, title:'Artisan Marketplace', tag:'E-commerce', category:'product', desc:'Artisan marketplace — 44% conversion uplift', emoji:'🛒', bg:'linear-gradient(135deg,#f0ece8,#e8e0d8)' },
+  { id:4, title:'GreenTrack Mobile', tag:'Mobile App', category:'mobile', desc:'Carbon footprint tracker for Gen Z users', emoji:'🌱', bg:'linear-gradient(135deg,#e8f0e8,#d8ead8)' },
+  { id:5, title:'Kofi Brand Identity', tag:'Branding', category:'branding', desc:'Full visual identity for a Lagos-based startup', emoji:'✦', bg:'linear-gradient(135deg,#f4eee8,#ece4d8)' },
+  { id:6, title:'PulseHR Dashboard', tag:'Product Design', category:'product', desc:'HR management tool — onboarding time cut 55%', emoji:'👥', bg:'linear-gradient(135deg,#eae8f0,#dcd8ec)' },
+  { id:7, title:'Lagos Food Delivery App', tag:'Mobile App', category:'mobile', desc:'Hyper-local food delivery UX for feature phones', emoji:'🍜', bg:'linear-gradient(135deg,#f4ebe4,#ece0d4)' },
+  { id:8, title:'EduPath Learning Portal', tag:'Website', category:'web', desc:'Online learning platform — 30% completion rate increase', emoji:'📚', bg:'linear-gradient(135deg,#e8eef4,#d8e8f0)' },
+  { id:9, title:'Lagos Transit Guide', tag:'Product Design', category:'product', desc:'Wayfinding UX for Lagos rapid transit system', emoji:'🚇', bg:'linear-gradient(135deg,#eeebe8,#e4ddd4)' },
+];
+
+function renderPortfolio(items) {
+  const grid = document.getElementById('portfolio-grid');
+  grid.innerHTML = items.map(p => `
+    <div class="port-card" onclick="showSection('projects')">
+      <div class="port-thumb" style="background:${p.bg};font-size:3.5rem;">
+        ${p.emoji}
+        <div class="port-overlay"><span class="port-overlay-text">View Case Study →</span></div>
+      </div>
+      <div class="port-body">
+        <div class="port-tag">${p.tag}</div>
+        <div class="port-title">${p.title}</div>
+        <div class="port-desc">${p.desc}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderPortfolio(portfolioItems);
+
+function filterPortfolio(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? portfolioItems : portfolioItems.filter(p => p.category === cat);
+  renderPortfolio(filtered);
+}
+
+// ─── NAVIGATION ───
+function showSection(id) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  return false;
+}
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+// ─── SCROLL NAV SHADOW ───
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 10);
+  // Progress bar (only on scrollable sections)
+  const winHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = winHeight > 0 ? (window.scrollY / winHeight) * 100 : 0;
+  document.getElementById('progress-bar').style.width = progress + '%';
+});
+
+// ─── CUSTOM CURSOR ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .featured-card, .port-card, .event-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '6px'; cursor.style.height = '6px';
+    ring.style.width = '52px'; ring.style.height = '52px';
+    ring.style.opacity = '.25';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+    ring.style.opacity = '.4';
+  });
+});
+
+// ─── CONTACT FORM ───
+function submitForm() {
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  form.style.display = 'none';
+  success.style.display = 'block';
+}
+
+// ─── INTERSECTION OBSERVER for animate-up ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.style.animationPlayState = 'running';
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.animate-up').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
