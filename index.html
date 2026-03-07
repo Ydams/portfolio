@@ -684,7 +684,47 @@
     .hero-summary { margin: 0 auto 2.5rem; }
     .hero-actions { justify-content: center; }
     .hero-stats { justify-content: center; }
-    .hero-visual { display: none; }
+    @media (max-width: 900px) {
+    .hero-wrap { 
+      grid-template-columns: 1fr; 
+      text-align: center; 
+    }
+    .hero-eyebrow { justify-content: center; }
+    .hero-summary { margin: 0 auto 2.5rem; }
+    .hero-actions { justify-content: center; }
+    .hero-stats { justify-content: center; }
+
+    /* ── IMAGE: now visible and centered on tablet/mobile ── */
+    .hero-visual { 
+      display: flex;
+      justify-content: center;
+      order: -1; /* moves image ABOVE the text */
+    }
+    .hero-avatar-frame {
+      width: 220px;
+      height: 270px;
+    }
+    .hero-badge {
+      right: -10px;
+      bottom: 16px;
+      padding: .7rem .9rem;
+      font-size: .7rem;
+    }
+    .hero-badge2 {
+      left: -10px;
+      top: 16px;
+      padding: .65rem .85rem;
+      font-size: .7rem;
+    }
+
+    .featured-grid { grid-template-columns: 1fr 1fr; }
+    .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
+    .cs-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+    .cs-outcome { grid-template-columns: 1fr 1fr 1fr; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+}
     .featured-grid { grid-template-columns: 1fr 1fr; }
     .contact-wrap { grid-template-columns: 1fr; gap: 3rem; }
     .cs-grid { grid-template-columns: 1fr; }
@@ -703,6 +743,15 @@
     .cs-outcome { grid-template-columns: 1fr; }
     .cs-header { grid-template-columns: 1fr; }
   }
+  @media (max-width: 480px) {
+    .hero-avatar-frame {
+      width: 180px;
+      height: 220px;
+    }
+    .hero-badge { display: none; } /* hides badges on very small screens to avoid overflow */
+    .hero-badge2 { display: none; }
+    .featured-grid { grid-template-columns: 1fr; }
+}
 
   /* ─── CUSTOM CURSOR ─── */
   @media (pointer: cursor) {
