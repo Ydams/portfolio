@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('6wv3j-_rvE56B1dmA');</script>
 <title>Damilola Abraham — UI/UX Designer & Software Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -685,6 +687,9 @@
   .delay-6 { animation-delay: .7s; }
 
   /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+  .webinar-wrap { grid-template-columns: 1fr !important; }
+}
   @media (max-width: 900px) {
     .hero-wrap { grid-template-columns: 1fr; text-align: center; }
     .hero-eyebrow { justify-content: center; }
@@ -896,29 +901,35 @@
     </div>
     <div class="featured-grid">
       <a href="#" class="featured-card" onclick="showSection('projects')">
-        <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ebe1,#e0d5c8);">🏥</div>
-        <div class="fc-body">
-          <div class="fc-tag">Mobile App · Healthcare</div>
-          <div class="fc-title">MediFlow Patient Portal</div>
-          <div class="fc-desc">Redesigned the appointment & health records experience for a 200k-user hospital app — reducing drop-off by 62%.</div>
-        </div>
-      </a>
+  <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ebe1,#e0d5c8); padding:0; overflow:hidden;">
+    <img src="havenhomes.png" alt="Haven Homes Real Estate UI" style="width:100%; height:100%; object-fit:cover; display:block;" />
+  </div>
+  <div class="fc-body">
+    <div class="fc-tag">Web App · Haven Homes Real Estate</div>
+    <div class="fc-title">Haven Homes Real Estate</div>
+    <div class="fc-desc">Designed a real estate platform that boosted client engagement and reduced inquiry response time by 50%.</div>
+  </div>
+</a>
       <a href="#" class="featured-card" onclick="showSection('projects')">
-        <div class="fc-thumb" style="background:linear-gradient(135deg,#e8e8f0,#d8d8e8);">💳</div>
-        <div class="fc-body">
-          <div class="fc-tag">Web App · FinTech</div>
-          <div class="fc-title">Navi Finance Dashboard</div>
-          <div class="fc-desc">End-to-end design of a personal finance dashboard — from 0 to 10k users in 3 months post-launch.</div>
-        </div>
-      </a>
+  <div class="fc-thumb" style="background:linear-gradient(135deg,#e8e8f0,#d8d8e8); padding:0; overflow:hidden;">
+    <img src="taskease.png" alt="TaskEase UI" style="width:100%; height:100%; object-fit:cover; display:block;" />
+  </div>
+  <div class="fc-body">
+    <div class="fc-tag">Web App · TaskEase</div>
+    <div class="fc-title">Task management platform</div>
+    <div class="fc-desc">Designed to help individuals and teams stay productive, organized, and in control of their work.</div>
+  </div>
+    </a>
       <a href="#" class="featured-card" onclick="showSection('projects')">
-        <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ece8,#e8e0d8);">🛒</div>
-        <div class="fc-body">
-          <div class="fc-tag">E-commerce · Product Design</div>
-          <div class="fc-title">Artisan Marketplace</div>
-          <div class="fc-desc">Full UX overhaul of an African artisan e-commerce platform — increased conversion rate by 44%.</div>
-        </div>
-      </a>
+  <div class="fc-thumb" style="background:linear-gradient(135deg,#f0ece8,#e8e0d8); padding:0; overflow:hidden;">
+    <img src="sabifix.png" alt="SabiFIX App UI" style="width:100%; height:100%; object-fit:cover; display:block;" />
+  </div>
+  <div class="fc-body">
+    <div class="fc-tag">E-commerce · Product Design</div>
+    <div class="fc-title">Artisan Marketplace</div>
+    <div class="fc-desc">Full UX overhaul of an African Artisan e-commerce platform — increased conversion rate by 44%.</div>
+  </div>
+  </a>
     </div>
   </div>
 </section>
@@ -958,8 +969,8 @@
   <div class="case-study">
     <div class="cs-header">
       <div>
-        <div class="cs-num">01 — Healthcare</div>
-        <div class="cs-title">MediFlow Patient Portal</div>
+        <div class="cs-num">01 — E-commerce</div>
+        <div class="cs-title">SabiFix Artisan Marketplace</div>
         <div class="cs-tags">
           <span class="cs-tag">UX Research</span>
           <span class="cs-tag">Figma</span>
@@ -977,11 +988,12 @@
       <div class="cs-grid">
         <div class="cs-block">
           <h4>Problem Statement</h4>
-          <p>Patients at a major hospital network struggled with a fragmented digital experience. The existing app had a 71% abandonment rate on the appointment booking flow, with users citing confusion, excessive steps, and trust issues around medical data.</p>
+          <p>Finding reliable artisans for home services is often difficult, as people rely on informal recommendations that lack transparency in pricing, quality, and availability. At the same time, many skilled artisans struggle with visibility and consistent job opportunities, 
+            creating a need for a trusted digital platform that connects customers with verified service providers.</p>
         </div>
         <div class="cs-block">
           <h4>My Role</h4>
-          <p>Lead UI/UX Designer working alongside a product manager and a 3-person engineering team. I owned research, information architecture, interaction design, and design system implementation.</p>
+          <p>UI/UX Designer working alongside other Product Designers and a 3-person engineering team. We owned research, information architecture, interaction design, and design system implementation.</p>
         </div>
       </div>
 
@@ -997,11 +1009,13 @@
       <div class="cs-grid">
         <div class="cs-block">
           <h4>Design Process</h4>
-          <p>Conducted 14 user interviews and a competitive audit of 8 healthcare apps. Synthesized findings into 3 user personas and journey maps. Ran 2 rounds of usability testing on lo-fi prototypes before high-fidelity implementation.</p>
+          <p>Conducted user interviews with homeowners and artisans and analyzed existing service marketplace platforms to identify usability gaps. Translated insights into user personas and journey maps, then created low-fidelity wireframes and prototypes. 
+            Iterated through usability testing before developing the final high-fidelity UI design</p>
         </div>
         <div class="cs-block">
           <h4>Key Decisions</h4>
-          <p>Reduced the booking flow from 11 steps to 4. Introduced a persistent progress indicator, clearer data consent UI, and a "care timeline" view that unified all health records in a single scroll.</p>
+          <p>Simplified the artisan booking process from multiple steps into a quick 4-step flow for faster service requests. Introduced a clear job status tracker, improved service selection and pricing transparency, 
+            and added detailed artisan profiles to help users compare skills, ratings, and availability before booking.</p>
         </div>
       </div>
 
@@ -1017,13 +1031,13 @@
   <div class="case-study">
     <div class="cs-header">
       <div>
-        <div class="cs-num">02 — FinTech</div>
-        <div class="cs-title">Navi Finance Dashboard</div>
+        <div class="cs-num">02 — PropTech</div>
+        <div class="cs-title">Haven Homes Website</div>
         <div class="cs-tags">
           <span class="cs-tag">Product Design</span>
           <span class="cs-tag">Data Viz</span>
           <span class="cs-tag">Design System</span>
-          <span class="cs-tag">Next.js</span>
+          <span class="cs-tag">UX Research</span>
           <span class="cs-tag">Tailwind</span>
         </div>
       </div>
@@ -1036,11 +1050,14 @@
       <div class="cs-grid">
         <div class="cs-block">
           <h4>Problem Statement</h4>
-          <p>Young professionals in Ghana lacked accessible tools for tracking personal finances. Existing solutions were either too complex, didn't support local currencies, or failed to account for informal income patterns common in the market.</p>
+          <p>Many potential home buyers struggle to find a reliable and user-friendly platform to explore property listings. Existing real estate websites are often cluttered, 
+            slow, or lack clear property information, making the search process overwhelming and inefficient for users.</p>
         </div>
         <div class="cs-block">
           <h4>My Role</h4>
-          <p>End-to-end product designer and front-end engineer. Built the full design system in Figma, created interactive prototypes, and implemented the React/Next.js front-end with real-time data visualization components.</p>
+          <p>End-to-end Product Designer and Front-End Developer.
+          I conducted user research, designed the full UI system in Figma, built interactive prototypes, and implemented the responsive interface using React and Tailwind CSS. 
+          My focus was creating a seamless browsing experience that allows users to easily discover properties and connect with agents.</p>
         </div>
       </div>
 
@@ -1056,11 +1073,13 @@
       <div class="cs-grid">
         <div class="cs-block">
           <h4>Design Process</h4>
-          <p>Surveyed 80+ users aged 22-35. Identified key mental models around money management in the Ghanaian context. Designed a contextual onboarding that auto-detects income patterns. Built a 64-component design system for consistency and developer handoff.</p>
+          <p>Conducted research with potential home buyers and renters to understand how they search for properties online. Identified key user needs such as clear property images, transparent pricing, and easy navigation. Designed intuitive search and filtering experiences and 
+            built a scalable design system to maintain visual consistency across pages.</p>
         </div>
         <div class="cs-block">
           <h4>Technical Implementation</h4>
-          <p>Built with Next.js 14, Recharts for data visualization, and Zustand for state management. Achieved 97 Lighthouse performance score. Designed accessible colour contrast at WCAG AA across all components.</p>
+          <p>Built the platform using React and Tailwind CSS to ensure a responsive and modern interface. Implemented optimized image loading for property galleries and created reusable UI components for listings, property cards, and agent contact forms. 
+            The result is a fast, accessible, and user-friendly real estate browsing experience.</p>
         </div>
       </div>
 
@@ -1092,29 +1111,29 @@
 
     <div class="exp-item">
       <div>
-        <div class="exp-role">Senior UI/UX Designer</div>
-        <div class="exp-company">Andela · Lagos, Nigeria</div>
-        <div class="exp-desc">Led design for 3 enterprise SaaS products serving 50k+ users. Built and maintained a cross-product design system. Mentored 2 junior designers. Collaborated daily with distributed engineering teams across 4 time zones.</div>
+        <div class="exp-role">Digital Operations Manager</div>
+        <div class="exp-company">Honeytreat Group · Lagos, Nigeria</div>
+        <div class="exp-desc">As Digital Operations Manager, I led the development and management of 3 websites platforms serving 50k+ users, built a unified cross-platform system, mentored 2 team members, and collaborated with remote teams to ensure smooth digital operations.</div>
       </div>
-      <div class="exp-date">2022 — Present</div>
+      <div class="exp-date">2025 — Present</div>
     </div>
 
     <div class="exp-item">
       <div>
-        <div class="exp-role">Product Designer & Front-End Engineer</div>
-        <div class="exp-company">Flutterwave · Remote</div>
-        <div class="exp-desc">Designed and built UI components for the merchant dashboard used by 900k+ businesses. Reduced support tickets related to UI confusion by 38% through targeted UX improvements.</div>
+        <div class="exp-role">Product Designer & Front-End Instructor</div>
+        <div class="exp-company">Algorithmics International School of Programming · Hybrid</div>
+        <div class="exp-desc">As a Programming Instructor at Algorithmics, I taught coding and computational thinking to children, guided students through project-based learning, mentored junior learners, and collaborated with educators to deliver engaging and effective tech education.</div>
       </div>
-      <div class="exp-date">2020 — 2022</div>
+      <div class="exp-date">2024 — 2025</div>
     </div>
 
     <div class="exp-item">
       <div>
-        <div class="exp-role">Software Engineer (Full-Stack)</div>
-        <div class="exp-company">InterswitchGroup · Lagos</div>
-        <div class="exp-desc">Developed features for the Quickteller payment platform using React, Node.js, and PostgreSQL. Gained deep understanding of fintech infrastructure that informs my product design work today.</div>
+        <div class="exp-role">Product Designer (Intern)</div>
+        <div class="exp-company">Flexisaf · Abuja</div>
+        <div class="exp-desc">As a Product Design Intern at Flexisaf, I contributed to designing and improving features for the Quickteller payment platform, applying user-centered design principles and gaining hands-on experience with fintech products and infrastructure.</div>
       </div>
-      <div class="exp-date">2018 — 2020</div>
+      <div class="exp-date">2024 — 2024</div>
     </div>
   </div>
 
@@ -1147,10 +1166,10 @@
         <h4>Engineering</h4>
         <div class="skill-tags">
           <span class="skill-tag">React</span>
-          <span class="skill-tag">Next.js</span>
-          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
           <span class="skill-tag">Node.js</span>
-          <span class="skill-tag">Tailwind</span>
+          <span class="skill-tag">Javascript</span>
           <span class="skill-tag">Git</span>
         </div>
       </div>
@@ -1172,10 +1191,10 @@
     <div class="exp-item">
       <div>
         <div class="exp-role">B.Sc. Computer Science</div>
-        <div class="exp-company">University of Ghana · Legon</div>
+        <div class="exp-company">Miva Open University · Nigeria</div>
         <div class="exp-desc">First Class Honours. Specialisation in Human-Computer Interaction. Final year project: "Designing for Low-Literacy Mobile Users in West Africa" — awarded Best Final Year Project.</div>
       </div>
-      <div class="exp-date">2014 — 2018</div>
+      <div class="exp-date">2026 — Till Date</div>
     </div>
   </div>
 
@@ -1189,19 +1208,19 @@
         <div class="cert-date">2023</div>
       </div>
       <div class="cert-item">
-        <div class="cert-title">AWS Certified Developer — Associate</div>
-        <div class="cert-issuer">Amazon Web Services</div>
-        <div class="cert-date">2022</div>
-      </div>
-      <div class="cert-item">
-        <div class="cert-title">Interaction Design Specialisation</div>
-        <div class="cert-issuer">UC San Diego / Coursera</div>
-        <div class="cert-date">2021</div>
-      </div>
-      <div class="cert-item">
-        <div class="cert-title">Accessibility in UX — WCAG 2.1</div>
-        <div class="cert-issuer">Deque University</div>
+        <div class="cert-title">Software Engineering — Certificate</div>
+        <div class="cert-issuer">ALX</div>
         <div class="cert-date">2023</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-title">Incubator Nigeria - FCB</div>
+        <div class="cert-issuer">Certificate in Product Design</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-title">UI/UX Design Certification — WCAG 2.1</div>
+        <div class="cert-issuer">3MTT Nigeria</div>
+        <div class="cert-date">2024</div>
       </div>
     </div>
   </div>
@@ -1222,13 +1241,9 @@
       <div class="event-title">
   Global Entrepreneurship Festival Conference, Ghana 2025
   <svg width="20" height="14" viewBox="0 0 20 14" xmlns="http://www.w3.org/2000/svg" style="display:inline-block; vertical-align:middle; margin-left:6px; border-radius:2px;">
-    <!-- Red stripe -->
     <rect width="20" height="4.67" y="0" fill="#EF3340"/>
-    <!-- Gold stripe -->
     <rect width="20" height="4.67" y="4.67" fill="#FCD116"/>
-    <!-- Green stripe -->
     <rect width="20" height="4.67" y="9.33" fill="#006B3F"/>
-    <!-- Black star -->
     <polygon points="10,5.2 10.7,7.4 13,7.4 11.2,8.7 11.8,11 10,9.7 8.2,11 8.8,8.7 7,7.4 9.3,7.4" fill="#000000"/>
   </svg>
 </div>
@@ -1266,6 +1281,64 @@
       <div class="event-desc">Attended Figma's flagship design conference. Connected with the global design community and explored new features in the design collaboration ecosystem.</div>
     </div>
   </div>
+
+  <!-- ── MONTHLY WEBINAR SECTION ── -->
+  <div style="margin-top:4rem; padding-top:3rem; border-top:1px solid var(--border);">
+    <div class="section-label">Monthly Webinar</div>
+    <h2 style="font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;letter-spacing:-.03em;margin-bottom:.5rem;">The Builders Circle</h2>
+    <p style="font-size:.95rem;color:var(--muted);margin-bottom:2.5rem;max-width:52ch;">Join me every month for a live session on growth, execution, and building with purpose. Register below to secure your spot.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;">
+
+      <!-- Flier -->
+      <div style="border-radius:8px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);">
+        <img src="webinar-flier.jpeg" alt="Growth Mindset + Execution Webinar Flier" style="width:100%;height:auto;display:block;" />
+      </div>
+
+      <!-- Registration Form -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2rem;">
+        <div style="font-family:var(--font-mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;">Register Now</div>
+        <h3 style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;letter-spacing:-.02em;margin-bottom:.4rem;">Growth Mindset + Execution</h3>
+        <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;">Saturday, 28th March 2026 · 6pm WAT · Virtual</p>
+
+        <div style="display:flex;flex-direction:column;gap:1rem;" id="webinar-form">
+  <div class="form-group">
+    <label>Full Name</label>
+    <input type="text" id="w-name" placeholder="Damilola Abraham" />
+  </div>
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" id="w-email" placeholder="you@email.com" />
+  </div>
+  <div class="form-group">
+    <label>Phone Number</label>
+    <input type="tel" id="w-phone" placeholder="+234 000 000 0000" />
+  </div>
+  <div class="form-group">
+    <label>What do you hope to gain?</label>
+    <select id="w-goal">
+      <option>Clarity on execution</option>
+      <option>Growth mindset strategies</option>
+      <option>Networking with builders</option>
+      <option>Accountability & momentum</option>
+      <option>All of the above</option>
+    </select>
+  </div>
+  <button class="form-submit" id="webinar-btn" onclick="submitWebinar()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    Register for Webinar
+  </button>
+  <div id="webinar-error" style="display:none;padding:1rem;background:rgba(200,71,43,.08);border:1px solid rgba(200,71,43,.25);border-radius:var(--radius);text-align:center;font-size:.85rem;color:var(--accent);">
+    ⚠️ Something went wrong. Please try again.
+  </div>
+</div>
+        <div id="webinar-success" style="display:none;padding:1.5rem;background:rgba(43,108,176,.08);border:1px solid rgba(43,108,176,.25);border-radius:var(--radius);text-align:center;font-size:.9rem;color:var(--accent2);">
+          🎉 You're registered! Check your email for the meeting link.
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <!-- ───────────── CONTACT ───────────── -->
@@ -1289,10 +1362,10 @@
           GitHub — /Damilola Abraham-dev
         </a>
         <a href="https://behance.net/damilolayusuf1" target="_blank" class="social-link">
-          <svg width="15" height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.62 12.78c.84-.36 1.48-1.07 1.48-2.14 0-1.34-1.03-2.14-2.73-2.14H8v6.71h4.48c1.64 0 2.76-.73 2.76-2.07 0-1.01-.6-1.7-1.62-2.14zM10.15 8.5h1.9c.73 0 1.25.37 1.25 1.05 0 .66-.52 1.05-1.25 1.05h-1.9V8.5zm2.08 4.79h-2.08v-2.1h2.08c.79 0 1.34.35 1.34 1.05 0 .7-.55 1.05-1.34 1.05zM9.01 4.5H13c2.42 0 3.86 1.15 3.86 2.94 0 1.3-.77 2.22-1.92 2.65v.06c1.3.3 2.22 1.26 2.22 2.7 0 2.05-1.57 3.15-4.17 3.15H8V4.5h1.01z"/>
+        <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.518 1.zee8 1.zasil3 1.8 1.356 0 2.ty392-.87 2.745-1.77h3.7zM15.racket97 14h5.4c-.093-1.414-.707-2.107-2.611-2.107-1.682 0-2.551.773-2.789 2.107zM10 13c0 2.783-2.114 4-5 4H0V7h4.5C7.122 7 9 8.203 9 10.632c0 1.3-.626 2.1-1.573 2.56C8.754 13.586 10 14.406 10 16v-3zm-4.837.Northern15H2v2.35h3.163c.932 0 1.584-.418 1.584-1.226 0-.765-.583-1.124-1.584-1.124zM2 9v2.128h2.684C5.837 11.128 6.6 10.675 6.6 10c0-.737-.601-1-1.857-1H2z"/>
         </svg>
-          Behance — /Damilola Studio
+           Behance — /Damilola Studio
         </a>
         <a href="mailto:damola4542@gmail.com" class="social-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -1301,45 +1374,46 @@
       </div>
     </div>
 
-    <div>
-      <div class="contact-form" id="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" placeholder="Jane" />
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" placeholder="Smith" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" placeholder="jane@company.com" />
-        </div>
-        <div class="form-group">
-          <label>Subject</label>
-          <select>
-            <option>Job Opportunity</option>
-            <option>Project Collaboration</option>
-            <option>Design Consultation</option>
-            <option>Speaking / Workshop</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell me about your project or opportunity..."></textarea>
-        </div>
-        <button class="form-submit" onclick="submitForm()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Send Message
-        </button>
-      </div>
-      <div class="form-success" id="form-success">
-         Message sent! I'll get back to you within 24 hours.
-      </div>
+    <div class="contact-form" id="contact-form">
+  <div class="form-row">
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" id="c-firstname" placeholder="Jane" />
     </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" id="c-lastname" placeholder="Smith" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Email Address</label>
+    <input type="email" id="c-email" placeholder="jane@company.com" />
+  </div>
+  <div class="form-group">
+    <label>Subject</label>
+    <select id="c-subject">
+      <option>Job Opportunity</option>
+      <option>Project Collaboration</option>
+      <option>Design Consultation</option>
+      <option>Speaking / Workshop</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Message</label>
+    <textarea id="c-message" placeholder="Tell me about your project or opportunity..."></textarea>
+  </div>
+  <button class="form-submit" id="contact-btn" onclick="submitForm()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    Send Message
+  </button>
+  <div id="contact-error" style="display:none;padding:1rem;background:rgba(200,71,43,.08);border:1px solid rgba(200,71,43,.25);border-radius:var(--radius);text-align:center;font-size:.85rem;color:var(--accent);">
+    ⚠️ Something went wrong. Please try again.
+  </div>
+</div>
+<div class="form-success" id="form-success">
+  ✅ Message sent! I'll get back to you within 24 hours.
+</div>
   </div>
 </section>
 
@@ -1373,13 +1447,13 @@
 <script>
 // ─── PORTFOLIO DATA ───
 const portfolioItems = [
-  { id:1, title:'MediFlow Patient Portal', tag:'Mobile App', category:'mobile', desc:'Healthcare UX redesign — 62% drop-off reduction', emoji:'🏥', bg:'linear-gradient(135deg,#f0ebe1,#e0d5c8)' },
-  { id:2, title:'Navi Finance Dashboard', tag:'Web App', category:'web', desc:'Personal finance tool — 10k users in 90 days', emoji:'💳', bg:'linear-gradient(135deg,#e8e8f0,#d8d8e8)' },
-  { id:3, title:'Artisan Marketplace', tag:'E-commerce', category:'product', desc:'Artisan marketplace — 44% conversion uplift', emoji:'🛒', bg:'linear-gradient(135deg,#f0ece8,#e8e0d8)' },
-  { id:4, title:'GreenTrack Mobile', tag:'Mobile App', category:'mobile', desc:'Carbon footprint tracker for Gen Z users', emoji:'🌱', bg:'linear-gradient(135deg,#e8f0e8,#d8ead8)' },
-  { id:5, title:'Kofi Brand Identity', tag:'Branding', category:'branding', desc:'Full visual identity for a Lagos-based startup', emoji:'✦', bg:'linear-gradient(135deg,#f4eee8,#ece4d8)' },
-  { id:6, title:'PulseHR Dashboard', tag:'Product Design', category:'product', desc:'HR management tool — onboarding time cut 55%', emoji:'👥', bg:'linear-gradient(135deg,#eae8f0,#dcd8ec)' },
-  { id:7, title:'Lagos Food Delivery App', tag:'Mobile App', category:'mobile', desc:'Hyper-local food delivery UX for feature phones', emoji:'🍜', bg:'linear-gradient(135deg,#f4ebe4,#ece0d4)' },
+  { id:1, title:'Taskease Management WebApp', tag:'Web App', category:'web', desc:'Task management platform — improved productivity and streamlined workflows', emoji:'<img src="taskease.png" alt="TaskEase" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#f0ebe1,#e0d5c8)' },
+  { id:2, title:'Haven Homes Website', tag:'Web App', category:'web', desc:'Real estate platform — improved property discovery and client engagement', emoji:'<img src="havenhomes.png" alt="Haven Homes" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#e8e8f0,#d8d8e8)' },
+  { id:3, title:'Artisan Marketplace', tag:'E-commerce', category:'product', desc:'Artisan marketplace — 44% conversion uplift', emoji:'<img src="sabifix.png" alt="SabiFIX" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#f0ece8,#e8e0d8)' },
+  { id:4, title:'Richwave Mobile', tag:'Mobile App', category:'mobile', desc:'Musical App for Gen Z users', emoji:'<img src="richwave.png" alt="Richwave" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#e8f0e8,#d8ead8)' },
+  { id:5, title:'sabiFix UI Interface', tag:'UI Design', category:'branding', desc:'Full Design Mockup of Sabi MobileApp', emoji:'<img src="sabifix-ui.png" alt="SabiFix UI" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#f4eee8,#ece4d8)' },
+  { id:6, title:'Finset Dashboard', tag:'Product Design', category:'product', desc:'Analytics Dashboard Interface — 55% improvement in user experience', emoji:'<img src="finset.png" alt="Finset Dashboard" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#eae8f0,#dcd8ec)' },
+  { id:7, title:'Gilead Hospital Website', tag:'Website', category:'mobile', desc:'Optimized for a Better User Experience', emoji:'<img src="gilead.png" alt="Gilead Hospital" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />', bg:'linear-gradient(135deg,#f4ebe4,#ece0d4)' },
   { id:8, title:'EduPath Learning Portal', tag:'Website', category:'web', desc:'Online learning platform — 30% completion rate increase', emoji:'📚', bg:'linear-gradient(135deg,#e8eef4,#d8e8f0)' },
   { id:9, title:'Lagos Transit Guide', tag:'Product Design', category:'product', desc:'Wayfinding UX for Lagos rapid transit system', emoji:'🚇', bg:'linear-gradient(135deg,#eeebe8,#e4ddd4)' },
 ];
@@ -1388,8 +1462,8 @@ function renderPortfolio(items) {
   const grid = document.getElementById('portfolio-grid');
   grid.innerHTML = items.map(p => `
     <div class="port-card" onclick="showSection('projects')">
-      <div class="port-thumb" style="background:${p.bg};font-size:3.5rem;">
-        ${p.emoji}
+      <div class="port-thumb" style="background:${p.bg};font-size:3.5rem;position:relative;">
+      ${p.emoji}
         <div class="port-overlay"><span class="port-overlay-text">View Case Study →</span></div>
       </div>
       <div class="port-body">
@@ -1462,10 +1536,68 @@ document.querySelectorAll('a, button, .featured-card, .port-card, .event-card').
 
 // ─── CONTACT FORM ───
 function submitForm() {
-  const form = document.getElementById('contact-form');
-  const success = document.getElementById('form-success');
-  form.style.display = 'none';
-  success.style.display = 'block';
+  const firstName = document.getElementById('c-firstname').value.trim();
+  const lastName  = document.getElementById('c-lastname').value.trim();
+  const email     = document.getElementById('c-email').value.trim();
+  const subject   = document.getElementById('c-subject').value;
+  const message   = document.getElementById('c-message').value.trim();
+
+  if (!firstName || !email || !message) {
+    alert('Please fill in your name, email, and message.');
+    return;
+  }
+
+  const btn = document.getElementById('contact-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  emailjs.send('service_9r0wvn4', 'template_hkbdt6h', {
+    from_name:  firstName + ' ' + lastName,
+    from_email: email,
+    subject:    subject,
+    message:    message
+  })
+  .then(() => {
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  })
+  .catch(() => {
+    document.getElementById('contact-error').style.display = 'block';
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+  });
+}
+// ─── WEBINAR FORM ───
+function submitWebinar() {
+  const name  = document.getElementById('w-name').value.trim();
+  const email = document.getElementById('w-email').value.trim();
+  const phone = document.getElementById('w-phone').value.trim();
+  const goal  = document.getElementById('w-goal').value;
+
+  if (!name || !email) {
+    alert('Please fill in your name and email.');
+    return;
+  }
+
+  const btn = document.getElementById('webinar-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  emailjs.send('service_9r0wvn4', 'template_6qznaxc', {
+    from_name:  name,
+    from_email: email,
+    phone:      phone,
+    goal:       goal
+  })
+  .then(() => {
+    document.getElementById('webinar-form').style.display = 'none';
+    document.getElementById('webinar-success').style.display = 'block';
+  })
+  .catch(() => {
+    document.getElementById('webinar-error').style.display = 'block';
+    btn.textContent = 'Register for Webinar';
+    btn.disabled = false;
+  });
 }
 
 // ─── INTERSECTION OBSERVER for animate-up ───
