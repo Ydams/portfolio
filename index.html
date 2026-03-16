@@ -139,31 +139,13 @@
   }
   .page-section.active { display: block; }
 
-  /* home is always shown first */
-  #home { display: block; }
-
-  .section-label {
-    font-family: var(--font-mono);
-    font-size: .82rem; letter-spacing: .18em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.4rem, 6vw, 4.5rem);
-    font-weight: 900; line-height: 1.08; letter-spacing: -.03em;
-    margin-bottom: 1.5rem;
-  }
-
-  .section-subtitle {
-    font-size: 1.05rem; color: var(--muted); max-width: 52ch; margin-bottom: 3rem;
-  }
-
   /* ─── HOME HERO ─── */
+  /* FIX: #home must NOT set display:grid by default — that overrides display:none on other pages */
   #home {
     padding-top: 0; min-height: 100vh;
-    display: grid; place-items: center;
+    place-items: center;
   }
+  #home.active { display: grid; }
 
   .hero-wrap {
     display: grid;
@@ -584,6 +566,31 @@
   /* ─── CONTACT ─── */
   #contact { padding: calc(var(--nav-h) + 4rem) 5vw 6rem; }
 
+  /* ─── PAGE BANNERS ─── */
+  .page-banner {
+    width: 100%; height: 220px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 3rem; border-radius: 4px; overflow: hidden;
+  }
+  .page-banner::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(0,0,0,.45);
+  }
+  .page-banner-title {
+    position: relative; z-index: 1;
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900; color: #fff;
+    letter-spacing: -.03em;
+    text-shadow: 0 2px 24px rgba(0,0,0,.4);
+  }
+  .banner-portfolio { background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 60%, #4a1942 100%); }
+  .banner-projects  { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+  .banner-resume    { background: linear-gradient(135deg, #1c1c1c 0%, #2d2d2d 50%, #3a2a1a 100%); }
+  .banner-events    { background: linear-gradient(135deg, #0d1b2a 0%, #1b2a3b 50%, #1e3a5f 100%); }
+  .banner-contact   { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); }
+
   .contact-wrap {
     display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
     max-width: 1000px;
@@ -774,6 +781,24 @@
     }
     body:hover #cursor, body:hover #cursor-ring { opacity: 1; }
   }
+
+  /* ─── SECTION LABEL & TITLE ─── */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: .82rem; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    font-weight: 900; line-height: 1.08; letter-spacing: -.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem; color: var(--muted); max-width: 52ch; margin-bottom: 3rem;
+  }
 </style>
 </head>
 <body>
@@ -900,6 +925,9 @@
 
 <!-- ───────────── PORTFOLIO ───────────── -->
 <section id="portfolio" class="page-section">
+  <div class="page-banner banner-portfolio">
+    <span class="page-banner-title">Portfolio</span>
+  </div>
   <div class="section-label">All Work</div>
   <h1 class="section-title">Portfolio</h1>
   <p class="section-subtitle">A curated collection of design work spanning mobile, web, and product — each rooted in research and built for real users.</p>
@@ -919,6 +947,9 @@
 
 <!-- ───────────── PROJECTS ───────────── -->
 <section id="projects" class="page-section">
+  <div class="page-banner banner-projects">
+    <span class="page-banner-title">Case Studies</span>
+  </div>
   <div class="section-label">Deep Dives</div>
   <h1 class="section-title">Case Studies</h1>
   <p class="section-subtitle">Detailed explorations of how I approach complex design problems — from discovery to delivery.</p>
@@ -1044,6 +1075,9 @@
 
 <!-- ───────────── RESUME ───────────── -->
 <section id="resume" class="page-section">
+  <div class="page-banner banner-resume">
+    <span class="page-banner-title">Resume</span>
+  </div>
   <div class="section-label">Credentials</div>
   <h1 class="section-title">Resume</h1>
 
@@ -1175,9 +1209,12 @@
 
 <!-- ───────────── EVENTS ───────────── -->
 <section id="events" class="page-section">
+  <div class="page-banner banner-events">
+    <span class="page-banner-title">Events</span>
+  </div>
   <div class="section-label">Community</div>
   <h1 class="section-title">Events</h1>
-  <p class="section-subtitle">Speaking, teaching, and learning — I invest in the design and tech community through active participation and collaboration.</p>
+  <p class="section-subtitle">Speaking, teaching, and learning — I actively invest in the design and tech community by building and nurturing a strong network through collaboration, knowledge sharing, and hosting webinars that help people grow and take action in their careers.</p>
 
   <div class="events-grid">
     <div class="event-card">
@@ -1230,8 +1267,12 @@
     </div>
   </div>
 </section>
+
 <!-- ───────────── CONTACT ───────────── -->
 <section id="contact" class="page-section">
+  <div class="page-banner banner-contact">
+    <span class="page-banner-title">Contact</span>
+  </div>
   <div class="section-label">Get In Touch</div>
   <div class="contact-wrap">
     <div class="contact-left">
