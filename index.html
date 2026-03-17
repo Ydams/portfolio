@@ -1493,6 +1493,7 @@ function filterPortfolio(cat, btn) {
 }
 
 // ─── NAVIGATION ───
+// ─── NAVIGATION ───
 function showSection(id) {
   document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1500,19 +1501,20 @@ function showSection(id) {
   const navEl = document.getElementById('nav-' + id);
   if (navEl) navEl.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Update the URL without reloading the page
   const slug = id === 'home' ? '/' : '/' + id;
   window.history.pushState({ section: id }, '', slug);
   return false;
 }
 
-// ─── HANDLE DIRECT URL ACCESS ───
-// This makes damilolayusuf.com/events work directly
+// ─── HANDLE DIRECT URL ACCESS via ?section= ───
 (function() {
-  const path = window.location.pathname.replace('/', '').replace(/\/$/, '');
+  const params = new URLSearchParams(window.location.search);
+  const section = params.get('section');
   const validSections = ['portfolio', 'projects', 'resume', 'events', 'contact'];
-  if (path && validSections.includes(path)) {
-    showSection(path);
+  if (section && validSections.includes(section)) {
+    showSection(section);
+    // Clean the URL
+    window.history.replaceState({ section: section }, '', '/' + section);
   }
 })();
 

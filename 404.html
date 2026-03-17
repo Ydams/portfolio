@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <script>
+    // Redirect /events → /?section=events
+    const path = window.location.pathname.replace('/', '').replace(/\/$/, '');
+    const validSections = ['portfolio', 'projects', 'resume', 'events', 'contact'];
+    if (path && validSections.includes(path)) {
+      window.location.replace('/?section=' + path);
+    } else {
+      window.location.replace('/');
+    }
+  </script>
+</head>
+<body></body>
+</html>
