@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Community — Damilola Abraham</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f2ec;
+    --accent: #c8472b;
+    --accent2: #2b6cb0;
+    --whatsapp: #25d366;
+    --whatsapp-dark: #128c4a;
+    --muted: #7a7570;
+    --border: #d9d4cb;
+    --card: #fff;
+    --shadow: 0 2px 32px 0 rgba(14,14,14,0.08);
+    --radius: 2px;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --nav-h: 68px;
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    opacity: .5;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    background: rgba(245,242,236,.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+    font-size: .82rem; font-weight: 400; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    transition: color .2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-links a.active { color: var(--ink); }
+  .nav-links a.active::after { transform: scaleX(1); }
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--ink); transition: transform .3s, opacity .3s;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .mobile-menu {
+    display: none;
+    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 800;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 5vw;
+    flex-direction: column; gap: 1.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 1rem; letter-spacing: .04em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+  }
+  @media (max-width: 900px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  .nav-cta {
+    font-size: .8rem; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    text-decoration: none; color: var(--paper);
+    background: var(--ink); padding: .55rem 1.4rem;
+    border-radius: var(--radius);
+    transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* ─── HERO BANNER ─── */
+.hero {
+    position: relative; z-index: 1;
+    min-height: 420px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: calc(var(--nav-h) + 5rem) 5vw 5rem;
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 680px; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .6rem;
+    font-family: var(--font-mono); font-size: .72rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--accent);
+  }
+
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    letter-spacing: -.04em;
+    color: #fff;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 em { color: var(--accent); font-style: italic; }
+
+  .hero-sub {
+    font-size: 1.05rem; color: rgba(245,242,236,.6);
+    max-width: 50ch; margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-stats {
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem; font-weight: 900;
+    color: #fff; letter-spacing: -.04em; line-height: 1;
+  }
+  .hero-stat-label {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: rgba(245,242,236,.45); margin-top: .3rem;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 1100px; margin: 0 auto;
+    padding: 6rem 5vw 8rem;
+  }
+
+  /* ─── SECTION HEADER ─── */
+  .sec-label {
+    font-family: var(--font-mono); font-size: .78rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .75rem;
+  }
+  .sec-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; letter-spacing: -.03em;
+    margin-bottom: .75rem; line-height: 1.1;
+  }
+  .sec-sub {
+    font-size: .95rem; color: var(--muted);
+    max-width: 52ch; line-height: 1.8; margin-bottom: 3.5rem;
+  }
+
+  /* ─── COMMUNITY CARDS ─── */
+  .communities { display: flex; flex-direction: column; gap: 4rem; }
+
+  .community-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    overflow: hidden;
+    transition: box-shadow .3s;
+  }
+  .community-card:hover { box-shadow: 0 12px 48px rgba(14,14,14,.1); }
+
+  /* ─── CARD HEADER ─── */
+  .card-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 2.5rem 2.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .card-icon {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon svg { width: 32px; height: 32px; }
+
+  .card-meta {}
+  .card-badge {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: .62rem;
+    letter-spacing: .14em; text-transform: uppercase;
+    padding: .28rem .75rem; border-radius: 2px;
+    margin-bottom: .6rem;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 900;
+    letter-spacing: -.03em; line-height: 1.2;
+    margin-bottom: .3rem;
+  }
+  .card-tagline { font-size: .88rem; color: var(--muted); }
+
+  .card-members {
+    text-align: right; flex-shrink: 0;
+  }
+  .card-members-num {
+    font-family: var(--font-display);
+    font-size: 2.2rem; font-weight: 900;
+    line-height: 1; letter-spacing: -.04em;
+  }
+  .card-members-label {
+    font-family: var(--font-mono); font-size: .65rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-top: .2rem;
+  }
+
+  /* ─── CARD BODY ─── */
+  .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .card-desc {
+    padding: 2rem 2.5rem;
+    border-right: 1px solid var(--border);
+  }
+  .card-desc p {
+    font-size: .9rem; color: var(--muted);
+    line-height: 1.8; margin-bottom: 1.25rem;
+  }
+  .card-desc p:last-child { margin-bottom: 0; }
+
+  .card-perks {
+    padding: 2rem 2.5rem;
+  }
+  .card-perks-title {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1rem;
+  }
+  .perk-list { list-style: none; display: flex; flex-direction: column; gap: .65rem; }
+  .perk-list li {
+    display: flex; align-items: flex-start; gap: .75rem;
+    font-size: .875rem; color: var(--muted); line-height: 1.6;
+  }
+  .perk-list li::before {
+    content: '✦';
+    color: var(--accent); font-size: .6rem;
+    margin-top: .35rem; flex-shrink: 0;
+  }
+
+  /* ─── CARD FOOTER ─── */
+  .card-footer {
+    padding: 1.75rem 2.5rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    background: var(--paper);
+  }
+
+  .card-footer-info {
+    font-family: var(--font-mono); font-size: .7rem;
+    letter-spacing: .08em; color: var(--muted);
+    display: flex; align-items: center; gap: .5rem;
+  }
+  .card-footer-info svg { width: 14px; height: 14px; opacity: .5; }
+
+  .btn-join {
+    display: inline-flex; align-items: center; gap: .65rem;
+    font-family: var(--font-body); font-size: .82rem;
+    font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
+    padding: .85rem 2rem; border-radius: var(--radius);
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .2s, box-shadow .2s, filter .2s;
+  }
+  .btn-join:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.3); filter: brightness(1.05); }
+  .btn-join svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  .btn-whatsapp {
+    background: var(--whatsapp);
+    color: #fff;
+  }
+  .btn-whatsapp:hover { box-shadow: 0 8px 24px rgba(37,211,102,.35); }
+
+  /* ─── DIVIDER ─── */
+  .section-divider {
+    margin: 5rem 0;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .section-divider span {
+    font-family: var(--font-mono); font-size: .68rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); white-space: nowrap;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .how-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2rem;
+  }
+  .how-num {
+    font-family: var(--font-display); font-size: 3rem;
+    font-weight: 900; letter-spacing: -.06em;
+    color: var(--border); line-height: 1; margin-bottom: 1rem;
+  }
+  .how-title {
+    font-weight: 700; font-size: .95rem; margin-bottom: .5rem;
+  }
+  .how-desc { font-size: .85rem; color: var(--muted); line-height: 1.7; }
+
+  /* ─── CTA STRIP ─── */
+  .cta-strip {
+    margin-top: 5rem;
+    background: var(--ink);
+    border-radius: 6px;
+    padding: 3.5rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-strip::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(200,71,43,.15) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(43,108,176,.12) 0%, transparent 60%);
+  }
+  .cta-strip-inner { position: relative; z-index: 1; }
+  .cta-strip h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 900; color: #fff;
+    letter-spacing: -.03em; margin-bottom: .75rem;
+  }
+  .cta-strip p {
+    font-size: .95rem; color: rgba(245,242,236,.55);
+    max-width: 46ch; margin: 0 auto 2rem; line-height: 1.8;
+  }
+  .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-cta-outline {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--font-body); font-size: .82rem;
+    font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    padding: .85rem 2rem; border-radius: var(--radius);
+    text-decoration: none; border: 1.5px solid rgba(255,255,255,.25);
+    color: rgba(245,242,236,.8);
+    transition: border-color .2s, color .2s, transform .2s;
+  }
+  .btn-cta-outline:hover { border-color: #fff; color: #fff; transform: translateY(-2px); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    font-size: .78rem; color: var(--muted);
+    font-family: var(--font-mono); letter-spacing: .06em;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { opacity: 0; animation: fadeUp .65s ease forwards; }
+  .d1 { animation-delay: .1s; }
+  .d2 { animation-delay: .22s; }
+  .d3 { animation-delay: .34s; }
+  .d4 { animation-delay: .46s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .card-header { grid-template-columns: auto 1fr; }
+    .card-members { display: none; }
+    .card-body { grid-template-columns: 1fr; }
+    .card-desc { border-right: none; border-bottom: 1px solid var(--border); }
+    .how-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    .cta-strip { padding: 2.5rem 1.5rem; }
+  }
+  @media (max-width: 600px) {
+    .card-header { grid-template-columns: 1fr; text-align: center; }
+    .card-icon { margin: 0 auto; }
+    .card-footer { flex-direction: column; align-items: flex-start; }
+    .hero-stats { flex-direction: column; gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Ydams<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html" onclick="sessionStorage.setItem('goto','portfolio')">Portfolio</a></li>
+    <li><a href="index.html" onclick="sessionStorage.setItem('goto','projects')">Projects</a></li>
+    <li><a href="index.html" onclick="sessionStorage.setItem('goto','resume')">Resume</a></li>
+    <li><a href="index.html" onclick="sessionStorage.setItem('goto','events')">Events</a></li>
+    <li><a href="community.html" class="active">Community</a></li>
+    <li><a href="index.html" onclick="sessionStorage.setItem('goto','contact')">Contact</a></li>
+  </ul>
+  <a href="index.html" class="nav-cta" onclick="sessionStorage.setItem('goto','contact')">Hire Me</a>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="index.html" onclick="sessionStorage.setItem('goto','portfolio')">Portfolio</a>
+  <a href="index.html" onclick="sessionStorage.setItem('goto','projects')">Projects</a>
+  <a href="index.html" onclick="sessionStorage.setItem('goto','resume')">Resume</a>
+  <a href="index.html" onclick="sessionStorage.setItem('goto','events')">Events</a>
+  <a href="community.html">Community</a>
+  <a href="index.html" onclick="sessionStorage.setItem('goto','contact')">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow fade-up d1">Community</div>
+    <h1 class="fade-up d2">Where Builders <em>Connect</em><br>& Grow Together</h1>
+    <p class="hero-sub fade-up d3">Join thriving communities of entrepreneurs, designers, and change-makers. Access exclusive insights, partnerships, and real conversations that move you forward.</p>
+    <div class="hero-stats fade-up d4">
+      <div>
+        <div class="hero-stat-num">2</div>
+        <div class="hero-stat-label">Active Groups</div>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,.1);"></div>
+      <div>
+        <div class="hero-stat-num">WhatsApp</div>
+        <div class="hero-stat-label">Platform</div>
+      </div>
+      <div style="width:1px;height:40px;background:rgba(255,255,255,.1);"></div>
+      <div>
+        <div class="hero-stat-num">Free</div>
+        <div class="hero-stat-label">To Join</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main>
+
+  <div class="sec-label">Active Communities</div>
+  <h2 class="sec-title">Pick Your Circle</h2>
+  <p class="sec-sub">Two focused communities — each built with a clear purpose and the right people. Find where you belong and take the next step.</p>
+
+  <div class="communities">
+
+    <!-- ── BUILDERS CIRCLE ── -->
+    <div class="community-card">
+      <div class="card-header">
+        <div class="card-icon" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
+          <!-- Builders icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <div class="card-badge" style="background:rgba(200,71,43,.1);color:var(--accent);">WhatsApp Community</div>
+          <div class="card-title">The Builders Circle</div>
+          <div class="card-tagline">A space for builders, entrepreneurs, and doers who move with intention</div>
+        </div>
+        <div class="card-members">
+          <div class="card-members-num" style="color:var(--accent);">Live</div>
+          <div class="card-members-label">Community</div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-desc">
+          <p>The Builders Circle is a curated WhatsApp community for entrepreneurs, product builders, and growth-minded professionals who are serious about execution. This isn't just another group — it's a focused space where ideas meet action.</p>
+          <p>Every month, members get access to live webinar sessions hosted by Damilola Abraham covering growth strategies, product thinking, digital operations, and career development. Conversations are real, resources are practical, and the network is intentional.</p>
+          <p>If you're building something — a business, a career, a product, or yourself — this is where you belong.</p>
+        </div>
+        <div class="card-perks">
+          <div class="card-perks-title">What You Get</div>
+          <ul class="perk-list">
+            <li>Monthly live webinar sessions with Damilola Abraham on growth, mindset & execution</li>
+            <li>Exclusive access to resources, templates, and frameworks shared only in the group</li>
+            <li>Peer-to-peer accountability with fellow builders who are serious about results</li>
+            <li>Early announcements for events, opportunities, and collaborations</li>
+            <li>Real-time conversations, feedback, and support from an active community</li>
+            <li>Free to join — always open to ambitious individuals ready to take action</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="card-footer-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Free to join · Active community · Monthly webinars
+        </div>
+        <a href="https://chat.whatsapp.com/KCdqw4nN7pEFOalvi9gczA?mode=gi_t" target="_blank" rel="noopener" class="btn-join btn-whatsapp">
+          <!-- WhatsApp SVG -->
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+          Join The Builders Circle
+        </a>
+      </div>
+    </div>
+
+    <!-- ── DAF VOLUNTEERS CONNECT ── -->
+    <div class="community-card">
+      <div class="card-header">
+        <div class="card-icon" style="background:linear-gradient(135deg,#0a2a6e,#b8860b);">
+          <!-- Foundation / heart icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <div class="card-meta">
+          <div class="card-badge" style="background:rgba(43,108,176,.1);color:var(--accent2);">WhatsApp Community</div>
+          <div class="card-title">DAF Volunteers Connect</div>
+          <div class="card-tagline">Powered by the Damilola Abraham Foundation — for those who give back</div>
+        </div>
+        <div class="card-members">
+          <div class="card-members-num" style="color:var(--accent2);">Live</div>
+          <div class="card-members-label">Community</div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-desc">
+          <p>DAF Volunteers Connect is the official community group of the Damilola Abraham Foundation — a purpose-driven space for volunteers, change-makers, and individuals committed to creating real impact in their communities.</p>
+          <p>Whether you're a seasoned volunteer or just beginning your journey of service, this group connects you with like-minded people who believe in empowerment through digital skills, mentorship, and community outreach.</p>
+          <p>As a member, you'll be among the first to know about upcoming DAF initiatives, training programs, outreach events, and volunteer opportunities across Nigeria and beyond.</p>
+        </div>
+        <div class="card-perks">
+          <div class="card-perks-title">What You Get</div>
+          <ul class="perk-list">
+            <li>First access to DAF training programs, digital skills bootcamps, and outreach events</li>
+            <li>Volunteer opportunities to directly impact individuals and communities</li>
+            <li>Mentorship coordination and access to growth support systems</li>
+            <li>Connect with fellow volunteers who are passionate about community development</li>
+            <li>Updates on DAF initiatives, partnerships, and impact projects as they happen</li>
+            <li>A supportive space to share ideas, collaborate, and build your network of impact</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="card-footer-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Free to join · Open to all · DAF Foundation initiative
+        </div>
+        <a href="https://chat.whatsapp.com/IKg8eY1wWcpLWrrF50RtG4?mode=gi_t" target="_blank" rel="noopener" class="btn-join btn-whatsapp">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+          Join DAF Volunteers Connect
+        </a>
+      </div>
+    </div>
+
+  </div><!-- end .communities -->
+
+  <!-- DIVIDER -->
+  <div class="section-divider"><span>How It Works</span></div>
+
+  <!-- HOW IT WORKS -->
+  <div class="sec-label">Simple Process</div>
+  <h2 class="sec-title">Join in 3 Steps</h2>
+  <p class="sec-sub">Getting into the community is simple. Click, join, and start connecting right away.</p>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-num">01</div>
+      <div class="how-title">Choose Your Group</div>
+      <div class="how-desc">Pick the community that matches where you are and where you're going — The Builders Circle for growth-focused professionals, or DAF Volunteers Connect for community impact.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">02</div>
+      <div class="how-title">Click the Join Button</div>
+      <div class="how-desc">Tap the green WhatsApp button on the community card. You'll be taken directly to the WhatsApp invite link. No sign-up forms, no waiting — instant access.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-num">03</div>
+      <div class="how-title">Introduce Yourself</div>
+      <div class="how-desc">Once you're in, say hello! Share your name, what you do, and what you're building or working towards. The community is warm, active, and always ready to engage.</div>
+    </div>
+  </div>
+
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <div class="cta-strip-inner">
+      <h2>Want to work or collaborate?</h2>
+      <p>If you're interested in partnering with Damilola Abraham, Ridgeview Innovations Hub, or the DAF Foundation — let's talk.</p>
+      <div class="cta-buttons">
+        <a href="index.html?section=portfolio" class="btn-join btn-whatsapp" style="background:var(--accent);box-shadow:none;" onmouseover="this.style.boxShadow='0 8px 24px rgba(200,71,43,.35)'" onmouseout="this.style.boxShadow='none'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          Visit Portfolio
+        </a>
+        <a href="index.html?section=contact" class="btn-cta-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get In Touch
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Damilola Abraham — All rights reserved</span>
+  <span>Community · Lagos, Nigeria</span>
+  <div style="display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap;">
+    <a href="https://linkedin.com/in/damilolayusuf1" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Ydams" target="_blank">GitHub</a>
+    <a href="https://behance.net/damilolayusuf1" target="_blank">Behance</a>
+    <a href="mailto:damola4542@gmail.com">Email</a>
+  </div>
+  <span>Designed by Ydams</span>
+</footer>
+
+<script>
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// Mobile menu toggle
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+}
+
+// Intersection observer for fade-up on community cards
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.community-card, .how-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(24px)';
+  el.style.transition = 'opacity .6s ease, transform .6s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
