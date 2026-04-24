@@ -100,15 +100,34 @@
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-  .mobile-menu {
-    display: none;
-    position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 800;
-    background: var(--paper);
-    border-bottom: 1px solid var(--border);
-    padding: 2rem 5vw;
-    flex-direction: column; gap: 1.5rem;
-  }
-  .mobile-menu.open { display: flex; }
+  .mobile-menu{
+  position:fixed;
+  top:var(--nav-h);
+  left:0;
+  right:0;
+  z-index:999;
+  background:var(--paper);
+
+  display:flex;
+  flex-direction:column;
+  gap:1.2rem;
+
+  padding:0 5vw;
+  max-height:0;
+  overflow:hidden;
+
+  border-bottom:1px solid transparent;
+
+  transition:
+    max-height .35s ease,
+    padding .35s ease;
+}
+
+.mobile-menu.open{
+  max-height:500px;
+  padding:2rem 5vw;
+  border-bottom:1px solid var(--border);
+}
   .mobile-menu a {
     font-size: 1rem; letter-spacing: .04em; text-transform: uppercase;
     color: var(--ink); text-decoration: none;
@@ -691,17 +710,36 @@
 </footer>
 
 <script>
+  if (window.location.pathname.endsWith('/community.html')) {
+  window.history.replaceState({}, '', '/community');
+}
 // Nav shadow on scroll
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
 });
 
 // Mobile menu toggle
-function toggleMenu() {
-  document.getElementById('mobile-menu').classList.toggle('open');
-  document.getElementById('hamburger').classList.toggle('open');
+function toggleMenu(){
+ const menu = document.getElementById('mobile-menu');
+ const burger = document.getElementById('hamburger');
+
+ menu.classList.toggle('open');
+ burger.classList.toggle('open');
+
+ document.body.style.overflow =
+   menu.classList.contains('open')
+   ? 'hidden'
+   : 'auto';
 }
 
+/* close menu after clicking a link */
+document.querySelectorAll('#mobile-menu a').forEach(link=>{
+ link.addEventListener('click',()=>{
+   document.getElementById('mobile-menu').classList.remove('open');
+   document.getElementById('hamburger').classList.remove('open');
+   document.body.style.overflow='auto';
+ });
+});
 // Intersection observer for fade-up on community cards
 const io = new IntersectionObserver((entries) => {
   entries.forEach(e => {
